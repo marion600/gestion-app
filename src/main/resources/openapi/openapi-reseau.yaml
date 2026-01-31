@@ -83,6 +83,24 @@ paths:
         '201':
           description: Voie ajoutée au chemin
 
+  /trains/{matricule}:
+    get:
+      summary: Consulter un train
+      operationId: consulterTrain
+      parameters:
+        - name: matricule
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Train trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Train'
+
 components:
   schemas:
 
@@ -146,3 +164,16 @@ components:
         - numero
         - vitesseMax
         - sensUnique
+
+    Train:
+      type: object
+      properties:
+        matricule:
+          type: string
+        wagons:
+          type: array
+          items:
+            type: string
+      required:
+        - matricule
+        - wagons

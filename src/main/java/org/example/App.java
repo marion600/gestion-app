@@ -1,17 +1,12 @@
 package org.example;
 
-import fr2.cours.info.tp.ferroviaire.cartographie.models.Gare;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class App {
+
     public static void main(String[] args) {
-
-        Gare gare = new Gare(
-                "G1",
-                "Gare Centrale",
-                2,
-                101
-        );
-
-        System.out.println(gare.getNom());
+        SpringApplication.run(App.class, args);
     }
 }

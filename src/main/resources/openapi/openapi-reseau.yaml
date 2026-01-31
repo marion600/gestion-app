@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: API Cartographie Ferroviaire
+  description: API REST entre l'application Usager et l'application Gestionnaire
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/api
+
+paths:
+
+  /reseaux:
+    post:
+      summary: Créer un réseau ferroviaire
+      operationId: creerReseau
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reseau'
+      responses:
+        '201':
+          description: Réseau créé
+
+  /reseaux/{nomReseau}/gares:
+    post:
+      summary: Ajouter une gare au réseau
+      operationId: ajouterGare
+      parameters:
+        - name: nomReseau
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Gare'
+      responses:
+        '201':
+          description: Gare ajoutée au réseau
+
+  /reseaux/{nomReseau}/chemins:
+    post:
+      summary: Ajouter un chemin de fer au réseau
+      operationId: ajouterChemin
+      parameters:
+        - name: nomReseau
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheminDeFer'
+      responses:
+        '201':
+          description: Chemin de fer ajouté
+
+  /chemins/{idChemin}/voies:
+    post:
+      summary: Ajouter une voie à un chemin de fer
+      operationId: ajouterVoie
+      parameters:
+        - name: idChemin
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Voie'
+      responses:
+        '201':
+          description: Voie ajoutée au chemin
+
+components:
+  schemas:
+
+    Reseau:
+      type: object
+      properties:
+        nom:
+          type: string
+      required:
+        - nom
+
+    Gare:
+      type: object
+      properties:
+        id:
+          type: string
+        nom:
+          type: string
+        nombreQuais:
+          type: integer
+        numero:
+          type: integer
+      required:
+        - id
+        - nom
+        - nombreQuais
+        - numero
+
+    CheminDeFer:
+      type: object
+      properties:
+        id:
+          type: string
+        nom:
+          type: string
+        distance:
+          type: number
+          format: double
+        gareDepart:
+          $ref: '#/components/schemas/Gare'
+        gareArrivee:
+          $ref: '#/components/schemas/Gare'
+      required:
+        - id
+        - nom
+        - distance
+        - gareDepart
+        - gareArrivee
+
+    Voie:
+      type: object
+      properties:
+        numero:
+          type: integer
+        vitesseMax:
+          type: number
+          format: double
+        sensUnique:
+          type: boolean
+      required:
+        - numero
+        - vitesseMax
+        - sensUnique

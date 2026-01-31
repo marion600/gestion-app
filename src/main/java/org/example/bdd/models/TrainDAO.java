@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name = "train")
 public class TrainDAO {
@@ -14,12 +15,11 @@ public class TrainDAO {
 
     private String matricule;
 
+    @ManyToOne
+    private GareDAO gare;
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getMatricule() {
@@ -28,5 +28,13 @@ public class TrainDAO {
 
     public void setMatricule(String matricule) {
         this.matricule = matricule;
+    }
+
+    public GareDAO getGare() {
+        return gare;
+    }
+
+    public void setGare(GareDAO gare) {
+        this.gare = gare;
     }
 }
